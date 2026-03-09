@@ -11,13 +11,13 @@ claude                # start Claude Code (sandboxed)
 
 ### One-Command Terminal (optional)
 
-Launch a fully configured [Ghostty](https://ghostty.org) terminal — Nix fetches it automatically:
+Launch a fully configured [Ghostty](https://ghostty.org) terminal:
 
 ```bash
 nix run .#terminal
 ```
 
-This opens Ghostty with the project config, zsh, starship prompt, and the full dev environment. No manual install needed.
+This opens Ghostty with the project config, zsh, starship prompt, and the full dev environment. On Linux, Nix fetches Ghostty automatically. On macOS, install first: `brew install ghostty`.
 
 ## Commands
 
@@ -56,7 +56,7 @@ CLAUDE.md             # Project conventions for Claude
 
 ## Terminal
 
-`nix run .#terminal` launches [Ghostty](https://ghostty.org) with the project config (`.ghostty`). Nix handles the install — no brew or manual setup needed.
+`nix run .#terminal` launches [Ghostty](https://ghostty.org) with the project config (`.ghostty`). On Linux, Nix provides Ghostty automatically. On macOS, install via `brew install ghostty`.
 
 To use Ghostty as your default terminal, copy the config:
 

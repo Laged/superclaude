@@ -43,16 +43,32 @@
       });
 
       # nix run .#terminal — launch Ghostty with the full dev environment
-      # Ghostty is fetched from nixpkgs automatically, no manual install needed
+      # Linux: Ghostty from nixpkgs (automatic)
+      # macOS: Ghostty from PATH (brew install ghostty)
       apps = forEachSystem ({ pkgs, ... }: {
         terminal = {
           type = "app";
-          program = toString (pkgs.writeShellScript "superclaude-terminal" ''
-            exec ${pkgs.ghostty}/bin/ghostty \
-              --config-file="$PWD/.ghostty" \
-              --working-directory="$PWD" \
-              -e nix develop --impure --command zsh
-          '');
+          program = toString (pkgs.writeShellScript "superclaude-terminal" (
+            (if pkgs.stdenv.hostPlatform.isDarwin then ''
+              if ! command -v ghostty &>/dev/null; then
+                echo "[superclaude] Ghostty not found."
+                echo ""
+                echo "  brew install ghostty"
+                echo ""
+                echo "Or enter the dev shell without Ghostty:"
+                echo "  nix develop --impure --command zsh"
+                exit 1
+              fi
+              ghostty_bin=ghostty
+            '' else ''
+              ghostty_bin=${pkgs.ghostty}/bin/ghostty
+            '') + ''
+              exec "$ghostty_bin" \
+                --config-file="$PWD/.ghostty" \
+                --working-directory="$PWD" \
+                -e nix develop --impure --command zsh
+            ''
+          ));
         };
       });
     };
