@@ -32,6 +32,46 @@
           type = "app";
           program = "${self.packages.${system}.superclaude-init}/bin/superclaude";
         };
+
+        # `nix run github:laged/superclaude#new-with-env -- my-project`
+        # Creates a project and opens Ghostty with the dev environment
+        apps.new-with-env = {
+          type = "app";
+          program = toString (pkgs.writeShellScript "superclaude-new-with-env" ''
+            set -euo pipefail
+
+            if [ -z "''${1:-}" ]; then
+              echo "Usage: nix run github:laged/superclaude#new-with-env -- <project-name>"
+              exit 1
+            fi
+
+            project_name="$1"
+
+            # Create the project
+            ${self.packages.${system}.superclaude-init}/bin/superclaude init "$project_name"
+
+            project_dir="$PWD/$project_name"
+
+            # Find Ghostty
+            ${if pkgs.stdenv.hostPlatform.isDarwin then ''
+              if [ -x "/Applications/Ghostty.app/Contents/MacOS/ghostty" ]; then
+                ghostty_bin="/Applications/Ghostty.app/Contents/MacOS/ghostty"
+              elif command -v ghostty &>/dev/null; then
+                ghostty_bin=ghostty
+              else
+                echo ""
+                echo "Ghostty not found. Enter the dev shell manually:"
+                echo "  cd $project_name && direnv allow"
+                exit 0
+              fi
+            '' else ''
+              ghostty_bin=${pkgs.ghostty}/bin/ghostty
+            ''}
+
+            # Launch Ghostty with the dev environment
+            exec "$ghostty_bin" -e nix develop "$project_dir" --impure --command zsh
+          '');
+        };
       }
     ) // {
       # Flake templates
