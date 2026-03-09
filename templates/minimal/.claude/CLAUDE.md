@@ -30,14 +30,21 @@ The sandbox restricts what commands can access:
 - **Network:** only npm registry, bun.sh, github.com, anthropic API
 - **Excluded from sandbox:** docker, podman, sudo (will prompt for permission)
 
+## Bundled Skills
+
+This project ships with 3 skills in `.claude-skills/`:
+- **tdd** — test-driven development workflow (red/green/refactor)
+- **debugging** — systematic diagnosis before proposing fixes
+- **code-review** — checklist for reviewing changes before committing
+
+Skills are automatically picked up by Claude Code from `.claude-skills/`.
+
 ## Creating New Skills
 
-Skills are markdown files that give Claude domain expertise for specific tasks.
-
-### Directory Structure
+To add a custom skill, create a directory in `.claude-skills/` with a `SKILL.md` file:
 
 ```
-skills/
+.claude-skills/
 └── my-skill/
     └── SKILL.md
 ```
@@ -61,14 +68,6 @@ Step-by-step instructions for Claude to follow.
 ## Key Principles
 Constraints, rules, and non-negotiables.
 ```
-
-### Deploy Skills
-
-```bash
-nix run .#skills-install-local
-```
-
-Skills are deployed to `.claude-skills/` and automatically picked up by Claude Code.
 
 ## File Permissions
 

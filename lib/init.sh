@@ -69,6 +69,14 @@ chmod -R u+w "$PROJECT_NAME"
 sed "s/PROJECT_NAME/$PROJECT_NAME/g" "$PROJECT_NAME/flake.nix" > "$PROJECT_NAME/flake.nix.tmp"
 mv "$PROJECT_NAME/flake.nix.tmp" "$PROJECT_NAME/flake.nix"
 
+# Substitute project name in README.md
+sed "s/PROJECT_NAME/$PROJECT_NAME/g" "$PROJECT_NAME/README.md" > "$PROJECT_NAME/README.md.tmp"
+mv "$PROJECT_NAME/README.md.tmp" "$PROJECT_NAME/README.md"
+
+# Substitute project name in package.json
+sed "s/PROJECT_NAME/$PROJECT_NAME/g" "$PROJECT_NAME/package.json" > "$PROJECT_NAME/package.json.tmp"
+mv "$PROJECT_NAME/package.json.tmp" "$PROJECT_NAME/package.json"
+
 # Set file permissions
 info "Setting file permissions..."
 chmod 700 "$PROJECT_NAME/.claude"
@@ -78,9 +86,10 @@ chmod 644 "$PROJECT_NAME/CLAUDE.md"
 chmod 644 "$PROJECT_NAME/.envrc"
 chmod 644 "$PROJECT_NAME/flake.nix"
 chmod 644 "$PROJECT_NAME/devenv.nix"
-
-# Create .claude-skills placeholder
-mkdir -p "$PROJECT_NAME/.claude-skills"
+chmod 644 "$PROJECT_NAME/README.md"
+chmod 644 "$PROJECT_NAME/package.json"
+chmod 644 "$PROJECT_NAME/tsconfig.json"
+chmod 644 "$PROJECT_NAME/biome.json"
 
 # Initialize git
 info "Initializing git repository..."
@@ -88,15 +97,32 @@ info "Initializing git repository..."
   cd "$PROJECT_NAME"
   git init -q
 
-  # Try to commit — if git identity isn't configured, skip the initial commit
+  # Stage only known template files — NEVER use git add -A
+  git add \
+    .gitignore \
+    .envrc \
+    flake.nix \
+    devenv.nix \
+    package.json \
+    tsconfig.json \
+    biome.json \
+    README.md \
+    CLAUDE.md \
+    .claude/settings.json \
+    .claude/CLAUDE.md \
+    .claude-skills/ \
+    src/
+
+  # Commit with fallback author if git identity isn't configured
   if git config user.email > /dev/null 2>&1 || [ -n "${GIT_AUTHOR_EMAIL:-}" ]; then
-    git add -A
     git commit -q -m "feat: initialize $PROJECT_NAME with superclaude"
   else
-    git add -A
-    info "Git identity not configured — skipping initial commit"
-    info "Run: git config user.email 'you@example.com' && git config user.name 'Your Name'"
-    info "Then: git commit -m 'feat: initialize $PROJECT_NAME with superclaude'"
+    git -c user.name="superclaude" -c user.email="superclaude@init" \
+      commit -q -m "feat: initialize $PROJECT_NAME with superclaude"
+    info "Committed with placeholder identity. Update with:"
+    info "  git config user.email 'you@example.com'"
+    info "  git config user.name 'Your Name'"
+    info "  git commit --amend --reset-author"
   fi
 )
 

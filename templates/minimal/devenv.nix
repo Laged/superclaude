@@ -43,8 +43,8 @@
     echo ""
   '';
 
-  # Pre-commit hooks
-  pre-commit.hooks = {
+  # Git hooks (pre-commit)
+  git-hooks.hooks = {
     # Detect accidentally committed secrets
     detect-private-keys.enable = true;
 
