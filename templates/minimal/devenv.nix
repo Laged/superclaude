@@ -38,8 +38,8 @@
     echo "Commands:"
     echo "  claude              — start Claude Code (sandboxed)"
     echo "  bun test            — run tests"
-    echo "  bun run dev         — start dev server (if configured)"
-    echo "  biome check --write — format and lint"
+    echo "  bun run dev         — run the project"
+    echo "  biome check .       — lint and format check"
     echo ""
   '';
 

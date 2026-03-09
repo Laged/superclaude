@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "bun run src/index.ts",
     "test": "bun test",
-    "check": "biome check --write ."
+    "check": "biome check .",
+    "format": "biome check --write ."
   }
 }
