@@ -41,5 +41,19 @@
           modules = [ ./devenv.nix ];
         };
       });
+
+      # nix run .#terminal — launch Ghostty with the full dev environment
+      # Ghostty is fetched from nixpkgs automatically, no manual install needed
+      apps = forEachSystem ({ pkgs, ... }: {
+        terminal = {
+          type = "app";
+          program = toString (pkgs.writeShellScript "superclaude-terminal" ''
+            exec ${pkgs.ghostty}/bin/ghostty \
+              --config-file="$PWD/.ghostty" \
+              --working-directory="$PWD" \
+              -e nix develop --impure --command zsh
+          '');
+        };
+      });
     };
 }

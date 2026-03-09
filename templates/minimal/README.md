@@ -9,6 +9,16 @@ direnv allow          # load the dev environment (or: nix develop --impure)
 claude                # start Claude Code (sandboxed)
 ```
 
+### One-Command Terminal (optional)
+
+Launch a fully configured [Ghostty](https://ghostty.org) terminal — Nix fetches it automatically:
+
+```bash
+nix run .#terminal
+```
+
+This opens Ghostty with the project config, zsh, starship prompt, and the full dev environment. No manual install needed.
+
 ## Commands
 
 | Command | Description |
@@ -18,6 +28,7 @@ claude                # start Claude Code (sandboxed)
 | `bun run check` | Lint check |
 | `bun run format` | Auto-fix lint + format |
 | `claude` | Start Claude Code |
+| `nix run .#terminal` | Launch Ghostty with full dev environment |
 
 ## Project Structure
 
@@ -43,12 +54,14 @@ CLAUDE.md             # Project conventions for Claude
 - **Prompt:** [Starship](https://starship.rs) (auto-configured)
 - **Shell:** zsh (available via devenv)
 
-## Recommended Terminal
+## Terminal
 
-This project ships a [Ghostty](https://ghostty.org) config in `.ghostty`. To use it:
+`nix run .#terminal` launches [Ghostty](https://ghostty.org) with the project config (`.ghostty`). Nix handles the install — no brew or manual setup needed.
 
-1. Install Ghostty: `brew install ghostty` (macOS) or from [ghostty.org](https://ghostty.org/download)
-2. Copy the config: `cp .ghostty ~/.config/ghostty/config`
-3. Restart Ghostty
+To use Ghostty as your default terminal, copy the config:
 
-The prompt works in any terminal — Ghostty is recommended, not required.
+```bash
+cp .ghostty ~/.config/ghostty/config
+```
+
+The dev environment works in any terminal — Ghostty just provides a consistent look across machines.
