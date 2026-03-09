@@ -90,6 +90,8 @@ chmod 644 "$PROJECT_NAME/README.md"
 chmod 644 "$PROJECT_NAME/package.json"
 chmod 644 "$PROJECT_NAME/tsconfig.json"
 chmod 644 "$PROJECT_NAME/biome.json"
+chmod 644 "$PROJECT_NAME/starship.toml"
+chmod 644 "$PROJECT_NAME/.ghostty"
 
 # Initialize git
 info "Initializing git repository..."
@@ -111,6 +113,8 @@ info "Initializing git repository..."
     .claude/settings.json \
     .claude/CLAUDE.md \
     .claude-skills/ \
+    starship.toml \
+    .ghostty \
     src/
 
   # Commit with fallback author if git identity isn't configured

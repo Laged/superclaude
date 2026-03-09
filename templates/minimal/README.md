@@ -14,8 +14,9 @@ claude                # start Claude Code (sandboxed)
 | Command | Description |
 |---------|-------------|
 | `bun test` | Run tests |
-| `bun run dev` | Start dev server |
-| `biome check --write .` | Format and lint |
+| `bun run dev` | Run the project |
+| `bun run check` | Lint check |
+| `bun run format` | Auto-fix lint + format |
 | `claude` | Start Claude Code |
 
 ## Project Structure
@@ -27,6 +28,8 @@ src/                  # Source code
   settings.json       # Sandbox configuration
   CLAUDE.md           # Environment docs for Claude
 .claude-skills/       # Claude skills (TDD, debugging, code review)
+starship.toml         # Starship prompt config
+.ghostty              # Ghostty terminal config (reference)
 CLAUDE.md             # Project conventions for Claude
 ```
 
@@ -37,3 +40,15 @@ CLAUDE.md             # Project conventions for Claude
 - **Linting:** [Biome](https://biomejs.dev)
 - **Dev environment:** [Nix](https://nixos.org) + [devenv](https://devenv.sh)
 - **AI assistant:** [Claude Code](https://docs.anthropic.com/en/docs/claude-code) (sandboxed)
+- **Prompt:** [Starship](https://starship.rs) (auto-configured)
+- **Shell:** zsh (available via devenv)
+
+## Recommended Terminal
+
+This project ships a [Ghostty](https://ghostty.org) config in `.ghostty`. To use it:
+
+1. Install Ghostty: `brew install ghostty` (macOS) or from [ghostty.org](https://ghostty.org/download)
+2. Copy the config: `cp .ghostty ~/.config/ghostty/config`
+3. Restart Ghostty
+
+The prompt works in any terminal — Ghostty is recommended, not required.
