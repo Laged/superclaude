@@ -1,0 +1,11 @@
+result
+result-*
+.direnv/
+.devenv/
+.devenv.flake.nix
+devenv.lock
+.pre-commit-config.yaml
+node_modules/
+*.log
+.env
+.env.local

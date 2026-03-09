@@ -1,0 +1,41 @@
+# Nix
+result
+result-*
+.direnv/
+.devenv/
+.devenv.flake.nix
+devenv.lock
+.pre-commit-config.yaml
+
+# Dependencies
+node_modules/
+bun.lockb
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Build
+dist/
+out/
+build/
+*.tsbuildinfo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Test
+coverage/
+
+# Logs
+*.log
+npm-debug.log*

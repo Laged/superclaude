@@ -1,0 +1,56 @@
+{
+  "sandbox": {
+    "enabled": true,
+    "autoAllow": true,
+    "allowUnsandboxedCommands": false,
+    "filesystem": {
+      "allowWrite": [
+        "~/.bun",
+        "~/.cache/biome",
+        "//tmp"
+      ],
+      "denyRead": [
+        "~/.ssh",
+        "~/.gnupg",
+        "~/.aws/credentials",
+        "~/.config/gh/hosts.yml"
+      ],
+      "denyWrite": [
+        "~/.ssh",
+        "~/.gnupg",
+        "~/.aws",
+        "~/.config"
+      ]
+    },
+    "network": {
+      "allowedDomains": [
+        "registry.npmjs.org",
+        "bun.sh",
+        "api.anthropic.com",
+        "github.com",
+        "raw.githubusercontent.com",
+        "objects.githubusercontent.com"
+      ]
+    },
+    "excludedCommands": [
+      "docker",
+      "podman",
+      "sudo"
+    ]
+  },
+  "permissions": {
+    "deny": [
+      "Bash(rm -rf /)",
+      "Bash(rm -rf ~)",
+      "Bash(chmod 777 *)",
+      "Bash(:(){ :|:& };:)",
+      "Edit(~/.ssh/*)",
+      "Edit(~/.aws/*)",
+      "Edit(~/.gnupg/*)",
+      "Edit(~/.bashrc)",
+      "Edit(~/.zshrc)",
+      "Read(~/.ssh/id_*)",
+      "Read(~/.aws/credentials)"
+    ]
+  }
+}
