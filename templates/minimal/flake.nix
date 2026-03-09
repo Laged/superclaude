@@ -66,10 +66,8 @@
             '' else ''
               ghostty_bin=${pkgs.ghostty}/bin/ghostty
             '') + ''
-              exec "$ghostty_bin" \
-                --config-file="$PWD/.ghostty" \
-                --working-directory="$PWD" \
-                -e nix develop --impure --command zsh
+              project_dir="$PWD"
+              exec "$ghostty_bin" -e nix develop "$project_dir" --impure --command zsh
             ''
           ));
         };
